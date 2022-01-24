@@ -247,6 +247,12 @@ class AppConverter: NSObject {
         
         if (!parameters.dryRun) {
             try FileManager.default.copyItem(at: binaryURL(for: bundleURL), to: extensionExecutableURL)
+            
+            // Copy Base.lproj, if it exists
+            try? FileManager.default.copyItem(at: bundleURL.appendingPathComponent("Base.lproj"), to:  extensionExecutableURL.deletingLastPathComponent().appendingPathComponent("Base.lproj"))
+            
+            // Copy Assets.car, if it exists
+            try? FileManager.default.copyItem(at: bundleURL.appendingPathComponent("Assets.car"), to:  extensionExecutableURL.deletingLastPathComponent().appendingPathComponent("Assets.car"))
         }
         
         let infoPlist: NSDictionary = try infoPlistDictionary(for: bundleURL)
