@@ -59,7 +59,7 @@ class AppConverter: NSObject {
                 delegate?.converter(self, didUpdateStep: "Modifying Mach-O headers.")
                 try modifyMachHeader(of: binaryURL(for: parameters.outputAppPath))
                 
-                if (outputAppProperties.name.contains("watch")) {
+                if (outputAppProperties.name.lowercased().contains("watch")) {
                     delegate?.converter(self, didUpdateStep: "Packaging app for watchOS.")
                     
                     let warning = AppConverterWarning(
@@ -77,7 +77,7 @@ class AppConverter: NSObject {
                     delegate?.converter(self, hasWarning: warning)
                     
                     try repackageBundleForWatchOS(at: parameters.outputAppPath)
-                } else if (outputAppProperties.name.contains("Catalyst")) {
+                } else if (outputAppProperties.name.lowercased().contains("catalyst")) {
                     // TODO: Support repackaging and rewriting dylib paths for Catalyst apps.
                     delegate?.converter(self, didUpdateStep: "Packaging app for Mac Catalyst.")
                     
@@ -149,7 +149,7 @@ class AppConverter: NSObject {
         } else {
             if let minimumOSVersionString = infoPlist["MinimumOSVersion"] as? String {
                 if let minimumOSVersion = NumberFormatter().number(from: minimumOSVersionString)?.floatValue {
-                    if (outputAppProperties.name.contains("watch")) {
+                    if (outputAppProperties.name.lowercased().contains("watch")) {
                         
                         // A non-watchOS app is being converted to a watchOS app.
                         // Subtract 7.0 from the MinimumOSVersion because watchOS versions are typically 7.0 less than their corresponding iOS version.
