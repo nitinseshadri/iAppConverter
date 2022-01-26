@@ -12,6 +12,47 @@ struct AppConverterWarning {
     var explanatoryText: String
 }
 
+enum AppConverterError: LocalizedError {
+    case parseError(_ filename: String, reason: String)
+    case toolNotFound(_ path: String)
+    case notImplementedYet(_ feature: String)
+
+    var errorDescription: String? {
+        switch self {
+        case .parseError(let filename, _):
+            return "Could not parse “\(filename)”"
+        case .toolNotFound:
+            return "Command-Line Tool Not Found"
+        case .notImplementedYet(let feature):
+            return feature
+        }
+    }
+    
+    var failureReason: String? {
+        switch self {
+        case .parseError(_, let reason):
+            return reason
+        case .toolNotFound(let path):
+            return "Could not find the command-line tool located at “\(path)”."
+        case .notImplementedYet:
+            return "This is not implemented yet. Conversion will fail."
+        }
+    }
+
+    var recoverySuggestion: String? {
+        switch self {
+        case .parseError:
+            return nil // You cannot recover from this error.
+        case .toolNotFound:
+            return "Make sure that you have Xcode or the Command-Line Tools installed.\n\nIf you do not have either of these, you can install the Command-Line Tools with\nxcode-select --install"
+        case .notImplementedYet:
+            return nil // You cannot recover from this error.
+        }
+    }
+        
+        
+}
+
 class AppConverter: NSObject {
     
     // MARK: Instance Variables
@@ -81,14 +122,6 @@ class AppConverter: NSObject {
                     // TODO: Support repackaging and rewriting dylib paths for Catalyst apps.
                     delegate?.converter(self, didUpdateStep: "Packaging app for Mac Catalyst.")
                     
-                    let warning = AppConverterWarning(
-                        title: "Packaging App for Mac Catalyst",
-                        explanatoryText: """
-                        This is not implemented yet. Conversion will fail.
-                        """
-                    )
-                    delegate?.converter(self, hasWarning: warning)
-                    
                     try repackageBundleForMacCatalyst(at: parameters.outputAppPath)
                 }
                 
@@ -128,7 +161,7 @@ class AppConverter: NSObject {
     private func binaryURL(for bundleURL: URL) throws -> URL {
         let infoPlist: NSDictionary = try infoPlistDictionary(for: bundleURL)
         guard let executableName = infoPlist["CFBundleExecutable"] as? String else {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError, userInfo: nil)
+            throw AppConverterError.parseError(infoPlistURL(for: bundleURL).lastPathComponent, reason: "There is no entry for CFBundleExecutable.")
         }
         let executableURL = bundleURL.appendingPathComponent(executableName)
         
@@ -206,7 +239,7 @@ class AppConverter: NSObject {
         let toolPath = "/usr/bin/vtool"
         
         if (!FileManager.default.fileExists(atPath: toolPath)) {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError, userInfo: nil)
+            throw AppConverterError.toolNotFound(toolPath)
         }
         
         process.executableURL = URL(fileURLWithPath: toolPath)
@@ -285,7 +318,7 @@ class AppConverter: NSObject {
     private func repackageBundleForMacCatalyst(at bundleURL: URL) throws {
         // Not implemented yet.
         
-        throw URLError(.unknown)
+        throw AppConverterError.notImplementedYet("Packaging App for Mac Catalyst")
     }
     
     private func dumpEntitlements(for binaryURL: URL) throws -> URL {
@@ -297,7 +330,7 @@ class AppConverter: NSObject {
         let toolPath = "/usr/bin/codesign"
         
         if (!FileManager.default.fileExists(atPath: toolPath)) {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError, userInfo: nil)
+            throw AppConverterError.toolNotFound(toolPath)
         }
         
         process.executableURL = URL(fileURLWithPath: toolPath)
@@ -332,7 +365,7 @@ class AppConverter: NSObject {
         let toolPath = "/usr/bin/codesign"
         
         if (!FileManager.default.fileExists(atPath: toolPath)) {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError, userInfo: nil)
+            throw AppConverterError.toolNotFound(toolPath)
         }
         
         process.executableURL = URL(fileURLWithPath: toolPath)
@@ -362,7 +395,7 @@ class AppConverter: NSObject {
         let toolPath = "/usr/bin/xattr"
         
         if (!FileManager.default.fileExists(atPath: toolPath)) {
-            throw NSError(domain: NSCocoaErrorDomain, code: NSFileNoSuchFileError, userInfo: nil)
+            throw AppConverterError.toolNotFound(toolPath)
         }
         
         process.executableURL = URL(fileURLWithPath: toolPath)

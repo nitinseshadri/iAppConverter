@@ -125,8 +125,15 @@ class ConvertViewController: NSViewController, AppConverterDelegate {
             
             let alert = NSAlert()
             alert.alertStyle = .critical
-            alert.messageText = "Conversion Failed"
-            alert.informativeText = "The error was: \(error.localizedDescription)"
+            
+            if let localizedError = error as? LocalizedError {
+                alert.messageText = localizedError.errorDescription ?? "Conversion Failed"
+                alert.informativeText = "\(localizedError.failureReason ?? "An unknown error occurred.") \n\n \(localizedError.recoverySuggestion ?? "You cannot recover from this error.")"
+            } else {
+                alert.messageText = "Conversion Failed"
+                alert.informativeText = "The error was: \(error.localizedDescription)"
+            }
+            
             alert.runModal()
             
             dismiss(self)
