@@ -191,30 +191,38 @@ class ViewController: NSViewController, NSOpenSavePanelDelegate {
                         
                         var outputAppPath: URL = inputAppPath
                         if let outputPath = outputPathTextField?.stringValue {
-                            let outputURL = URL(fileURLWithPath: outputPath)
-                            if (outputURL.isAppBundle) {
-                                outputAppPath = outputURL
-                                
-                                var parameters = ConversionParameters(inputAppType: inputAppType, outputAppType: outputAppType, inputAppPath: inputAppPath, outputAppPath: outputAppPath, unquarantineWhenDone: unquarantineWhenDone)
-                                
-                                parameters.dryRun = dryRun
-                                
-                                if let architecture = architecture {
-                                    parameters.outputAppType.architecture = architecture
+                            if !outputPath.isEmpty {
+                                let outputURL = URL(fileURLWithPath: outputPath)
+                                if (outputURL.isAppBundle) {
+                                    outputAppPath = outputURL
+                                } else {
+                                    error = "The output path should be an app bundle."
                                 }
-                                
-                                if let deviceFamilies = deviceFamilies {
-                                    parameters.outputAppType.deviceFamilies = deviceFamilies
-                                }
-                                
-                                if let buildPlatform = buildPlatform {
-                                    parameters.outputAppType.buildPlatform = buildPlatform
-                                }
-                                
-                                return (true, nil, parameters)
                             } else {
-                                error = "The output path should be an app bundle."
+                                NSLog("The output path is empty.")
                             }
+                        } else {
+                            NSLog("The output path is not valid.")
+                        }
+                        
+                        if error.isEmpty {
+                            var parameters = ConversionParameters(inputAppType: inputAppType, outputAppType: outputAppType, inputAppPath: inputAppPath, outputAppPath: outputAppPath, unquarantineWhenDone: unquarantineWhenDone)
+                            
+                            parameters.dryRun = dryRun
+                            
+                            if let architecture = architecture {
+                                parameters.outputAppType.architecture = architecture
+                            }
+                            
+                            if let deviceFamilies = deviceFamilies {
+                                parameters.outputAppType.deviceFamilies = deviceFamilies
+                            }
+                            
+                            if let buildPlatform = buildPlatform {
+                                parameters.outputAppType.buildPlatform = buildPlatform
+                            }
+                            
+                            return (true, nil, parameters)
                         }
                     } else {
                         error = "The input path should be an app bundle."
