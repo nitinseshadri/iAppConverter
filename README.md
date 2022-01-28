@@ -1,6 +1,6 @@
 # iAppConverter
 
-<img src="Screenshot.png" alt="Screenshot of the iAppConverter app showing the main screen">
+<img src="Screenshot.png" width="610" alt="Screenshot of the iAppConverter app showing the main screen">
 
 iAppConverter is a tool that allows you to convert apps to run on different Apple platforms than they were originally intended for.
 
