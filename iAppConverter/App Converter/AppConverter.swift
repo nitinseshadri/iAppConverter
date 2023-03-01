@@ -202,7 +202,14 @@ class AppConverter: NSObject {
                         
                         outputAppProperties.deploymentTargetVersion = watchMinimumOSVersion
                         
-                        infoPlist["WKWatchKitApp"] = true
+                        if (watchMinimumOSVersion >= 9.0) {
+                            // If 9.0 or newer, create a single-target watchOS app.
+                            infoPlist["WKApplication"] = true
+                            infoPlist["WKWatchOnly"] = true
+                        } else {
+                            infoPlist["WKWatchKitApp"] = true
+                        }
+                        
                         infoPlist.removeObject(forKey: "LSRequiresIPhoneOS")
 
                     } else {
@@ -264,6 +271,14 @@ class AppConverter: NSObject {
     }
     
     private func repackageBundleForWatchOS(at bundleURL: URL) throws {
+        if let deploymentTargetVersion = outputAppProperties.deploymentTargetVersion {
+            if (deploymentTargetVersion >= 9.0) {
+                // If the watchOS deployment target is 9.0 or newer, create a single-target watchOS app.
+                // This becomes a no-op.
+                return
+            }
+        }
+        
         // Create _WatchKitStub directory and copy the executable to it
         let stubExecutableURL = bundleURL.appendingPathComponent("_WatchKitStub").appendingPathComponent("WK")
         
