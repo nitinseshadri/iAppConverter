@@ -85,28 +85,28 @@ class ViewController: NSViewController, NSOpenSavePanelDelegate {
     
     @IBAction func browseForInputPath(_ sender: Any) {
         let panel = NSOpenPanel()
-        let response = panel.runModal()
-        
-        switch(response) {
-        case .OK:
-            inputPathTextField?.stringValue = panel.url?.path ?? ""
-            break
-        default:
-            break
+        panel.beginSheetModal(for: view.window!) { response in
+            switch(response) {
+            case .OK:
+                self.inputPathTextField?.stringValue = panel.url?.path ?? ""
+                break
+            default:
+                break
+            }
         }
     }
     
     @IBAction func browseForOutputPath(_ sender: Any) {
         let panel = NSSavePanel()
         panel.delegate = self
-        let response = panel.runModal()
-        
-        switch(response) {
-        case .OK:
-            outputPathTextField?.stringValue = panel.url?.path ?? ""
-            break
-        default:
-            break
+        panel.beginSheetModal(for: view.window!) { response in
+            switch(response) {
+            case .OK:
+                self.outputPathTextField?.stringValue = panel.url?.path ?? ""
+                break
+            default:
+                break
+            }
         }
     }
     
