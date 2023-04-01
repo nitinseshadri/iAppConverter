@@ -108,10 +108,12 @@ class AppConverter: NSObject {
                         explanatoryText: """
                         Some points to consider when converting your UIKit app to work on watchOS (please read before clicking OK):
                         - This has only been tested on the simulator. It will probably work on a real device, but I haven't fully worked out the steps yet.
+
+                        IF YOU ARE NOT TARGETING watchOS 9.0 or newer (iOS 16.0 or newer):
                         - You will need to copy any bundle resources your app uses (e.g. Storyboards) into the WatchKitExtension.appex bundle in PlugIns. This is because the executable that runs is the one in the extension bundle. The WatchKit App executable is not used or checked in the simulator.
                         - On a real device, you cannot replace the WatchKit App stub executable, use install_name_tool to replace SockPuppetGizmo, etc. watchOS now seems to check that the stub executable links against SockPuppetGizmo (and possibly that it is signed by Apple as well).
                         - Storyboards are supported, but you must initialize your UIWindow in code. See tutorials online on how to do this.
-                        - SceneKit (UIScene, UIWindowScene, etc.) is not available on watchOS. Use the AppDelegate instead.
+                        - UIScene, UIWindowScene, etc. are not available. Use the AppDelegate instead.
                         - Make sure your AppDelegate has a UIWindow property named "window", or your app will crash on launch.
                         """
                     )
