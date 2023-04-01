@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -1016,15 +1016,15 @@
                                     <scrollView verticalHuggingPriority="240" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Awj-9x-r2c">
                                         <rect key="frame" x="0.0" y="0.0" width="462" height="116"/>
                                         <clipView key="contentView" drawsBackground="NO" id="eDR-MD-UM1">
-                                            <rect key="frame" x="0.0" y="0.0" width="462" height="116"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="447" height="116"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" verticallyResizable="YES" smartInsertDelete="YES" id="bqP-VF-FjX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="462" height="116"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="447" height="116"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <size key="minSize" width="462" height="116"/>
+                                                    <size key="minSize" width="447" height="116"/>
                                                     <size key="maxSize" width="471" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment>
@@ -1171,7 +1171,7 @@ UIDeviceFamily Reference: </string>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment>
-                                                            <string key="content">2 = iOS/iPadOS, 3 = tvOS, 4 = watchOS, 5 = bridgeOS (Touch Bar), 6 = Mac Catalyst, 7 = iOS Simulator, 8 = tvOS Simulator, 9 = watchOS Simulator, for other values see mach-o/loader.h</string>
+                                                            <string key="content">1 = macOS, 2 = iOS/iPadOS, 3 = tvOS, 4 = watchOS, 5 = bridgeOS (Touch Bar), 6 = Mac Catalyst, 7 = iOS Simulator, 8 = tvOS Simulator, 9 = watchOS Simulator, 10 = DriverKit, 11 = realityOS, 12 = realityOS Simulator, for other values see mach-o/loader.h</string>
                                                             <attributes>
                                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" size="12" name="Helvetica"/>
@@ -1227,7 +1227,7 @@ UIDeviceFamily Reference: </string>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="q5W-DF-rJA">
-                                            <rect key="frame" x="446" y="0.0" width="16" height="116"/>
+                                            <rect key="frame" x="447" y="0.0" width="15" height="116"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
