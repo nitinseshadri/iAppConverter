@@ -47,7 +47,7 @@ struct AppPlatformKind {
     
     // TODO: Add HomePod (not sure what the LC_BUILD_VERSION platform or CFBundleSupportedPlatforms for it is)
     // TODO: Add bridgeOS/TouchBar (not sure what the CFBundleSupportedPlatforms for it is)
-    // TODO: Add realityOS (not sure what the CFBundleSupportedPlatforms for it is)
+    // TODO: Add visionOS (not sure what the CFBundleSupportedPlatforms for it is)
     
     static let ios = AppPlatform(name: "iOS or iPadOS", deviceFamilies: [1, 2], buildPlatform: 2, cfSupportedPlatforms: ["iPhoneOS"])
     static let tvos = AppPlatform(name: "tvOS", deviceFamilies: [3], buildPlatform: 3, cfSupportedPlatforms: ["AppleTVOS"])

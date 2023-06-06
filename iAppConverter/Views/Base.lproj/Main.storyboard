@@ -1171,7 +1171,7 @@ UIDeviceFamily Reference: </string>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment>
-                                                            <string key="content">1 = macOS, 2 = iOS/iPadOS, 3 = tvOS, 4 = watchOS, 5 = bridgeOS (Touch Bar), 6 = Mac Catalyst, 7 = iOS Simulator, 8 = tvOS Simulator, 9 = watchOS Simulator, 10 = DriverKit, 11 = realityOS, 12 = realityOS Simulator, for other values see mach-o/loader.h</string>
+                                                            <string key="content">1 = macOS, 2 = iOS/iPadOS, 3 = tvOS, 4 = watchOS, 5 = bridgeOS (Touch Bar), 6 = Mac Catalyst, 7 = iOS Simulator, 8 = tvOS Simulator, 9 = watchOS Simulator, 10 = DriverKit, 11 = visionOS, 12 = visionOS Simulator, for other values see mach-o/loader.h</string>
                                                             <attributes>
                                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" size="12" name="Helvetica"/>
