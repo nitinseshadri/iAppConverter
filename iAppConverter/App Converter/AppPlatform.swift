@@ -67,6 +67,8 @@ struct ConversionParameters {
     var inputAppPath: URL
     var outputAppPath: URL
     
+    var bundleIdentifier: String? = nil
+    
     var dryRun: Bool = true
     
     var unquarantineWhenDone: Bool = true // recommended to stop Gatekeeper checks

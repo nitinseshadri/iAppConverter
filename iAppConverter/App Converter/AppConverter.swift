@@ -225,6 +225,17 @@ class AppConverter: NSObject {
             infoPlist["UIDeviceFamily"] = outputAppProperties.deviceFamilies
         }
         
+        if let bundleIdentifier = parameters.bundleIdentifier {
+            infoPlist["CFBundleIdentifier"] = bundleIdentifier
+        }
+        
+        if let bundleIdentifier = infoPlist["CFBundleIdentifier"] as? String {
+            if (bundleIdentifier.starts(with: "com.apple")) {
+                let warning = AppConverterWarning(title: "Apps with bundle identifiers starting with “com.apple” may not launch after conversion.", explanatoryText: "Consider changing the bundle identifier.")
+                delegate?.converter(self, hasWarning: warning)
+            }
+        }
+        
         infoPlist.removeObject(forKey: "DTSDKName")
         infoPlist.removeObject(forKey: "DTSDKBuild")
         infoPlist.removeObject(forKey: "DTCompiler")
@@ -373,9 +384,44 @@ class AppConverter: NSObject {
         return entitlementsPlistURL
     }
     
+    private func processEntitlementsPlist(_ entitlementsPlistURL: URL) throws {
+        let entitlementsPlist: NSMutableDictionary = try NSMutableDictionary(contentsOf: entitlementsPlistURL, error: ())
+        
+        // Remove Apple private entitlements
+        // This is enabled by default to prevent malicious use.
+        // Experts can use the defaults key below to override this behavior.
+        let defaults = UserDefaults.standard
+        if (!defaults.bool(forKey: "OverrideRemoveApplePrivateEntitlements")) {
+            if let allEntitlements = entitlementsPlist.allKeys as? [String] {
+                var privateEntitlements = allEntitlements.filter { $0.starts(with: "com.apple.private") }
+                
+                // TODO: Add other known Apple private entitlements here
+                privateEntitlements.append(contentsOf: [
+                    "application-identifier",
+                    "platform-application",
+                    "com.apple.QuartzCore.secure-mode"
+                ])
+                
+                for privateEntitlement in privateEntitlements {
+                    entitlementsPlist.removeObject(forKey: privateEntitlement)
+                }
+            }
+        }
+
+        print(entitlementsPlist)
+        
+        if (!parameters.dryRun) {
+            try entitlementsPlist.write(to: entitlementsPlistURL)
+        }
+    }
+    
     private func codesignBundle(at bundleURL: URL) throws {
         
         let entitlementsPlistURL = try dumpEntitlements(for: binaryURL(for: bundleURL))
+        
+        if (!parameters.dryRun) {
+            try processEntitlementsPlist(entitlementsPlistURL)
+        }
         
         let process = Process()
         

@@ -24,6 +24,9 @@ class ViewController: NSViewController, NSOpenSavePanelDelegate {
     @IBOutlet weak var forceBuildPlatformCheckbox: NSButton?
     @IBOutlet weak var buildPlatformTextField: NSTextField?
     
+    @IBOutlet weak var changeBundleIdentifierCheckbox: NSButton?
+    @IBOutlet weak var bundleIdentifierTextField: NSTextField?
+    
     @IBOutlet weak var unquarantineCheckbox: NSButton?
     
     @IBOutlet weak var dryRunCheckbox: NSButton?
@@ -177,6 +180,11 @@ class ViewController: NSViewController, NSOpenSavePanelDelegate {
             }
         }
         
+        var bundleIdentifier: String? = nil
+        if (changeBundleIdentifierCheckbox?.state == .on) {
+            bundleIdentifier = bundleIdentifierTextField?.stringValue ?? ""
+        }
+        
         let unquarantineWhenDone: Bool = (unquarantineCheckbox?.state == .on) ? true : false
         
         let dryRun: Bool = (dryRunCheckbox?.state == .on) ? true : false
@@ -220,6 +228,10 @@ class ViewController: NSViewController, NSOpenSavePanelDelegate {
                             
                             if let buildPlatform = buildPlatform {
                                 parameters.outputAppType.buildPlatform = buildPlatform
+                            }
+                            
+                            if let bundleIdentifier = bundleIdentifier {
+                                parameters.bundleIdentifier = bundleIdentifier
                             }
                             
                             return (true, nil, parameters)
