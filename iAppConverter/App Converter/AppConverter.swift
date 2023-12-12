@@ -214,6 +214,23 @@ class AppConverter: NSObject {
                         
                         infoPlist.removeObject(forKey: "LSRequiresIPhoneOS")
 
+                    } else if (outputAppProperties.name.lowercased().contains("vision")) {
+                        
+                        // A non-visionOS app is being converted to a visionOS app.
+                        // Subtract 16.0 from the MinimumOSVersion because visionOS versions are typically 16.0 less than their corresponding iPadOS version.
+                        // For example, visionOS 1.0 corresponds with iPadOS 17.0.
+                        var visionMinimumOSVersion = minimumOSVersion - 16.0
+                        
+                        if (visionMinimumOSVersion < 1.0) {
+                            visionMinimumOSVersion = 1.0
+                        }
+                        
+                        infoPlist["MinimumOSVersion"] = String(visionMinimumOSVersion)
+                        
+                        outputAppProperties.deploymentTargetVersion = visionMinimumOSVersion
+                        
+                        infoPlist.removeObject(forKey: "LSRequiresIPhoneOS")
+                        
                     } else {
                         outputAppProperties.deploymentTargetVersion = minimumOSVersion
                     }
