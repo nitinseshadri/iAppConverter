@@ -40,6 +40,8 @@ struct AppPlatformKind {
             return tvosSimulator
         case 7:
             return watchosSimulator
+        case 8:
+            return visionosSimulator
         default:
             return unknown
         }
@@ -47,7 +49,7 @@ struct AppPlatformKind {
     
     // TODO: Add HomePod (not sure what the LC_BUILD_VERSION platform or CFBundleSupportedPlatforms for it is)
     // TODO: Add bridgeOS/TouchBar (not sure what the CFBundleSupportedPlatforms for it is)
-    // TODO: Add visionOS (not sure what the CFBundleSupportedPlatforms for it is)
+    // TODO: Add visionOS device (not sure what the CFBundleSupportedPlatforms for it is)
     
     static let ios = AppPlatform(name: "iOS or iPadOS", deviceFamilies: [1, 2], buildPlatform: 2, cfSupportedPlatforms: ["iPhoneOS"])
     static let tvos = AppPlatform(name: "tvOS", deviceFamilies: [3], buildPlatform: 3, cfSupportedPlatforms: ["AppleTVOS"])
@@ -57,6 +59,7 @@ struct AppPlatformKind {
     static let iosSimulator = AppPlatform(name: "iOS or iPadOS Simulator", deviceFamilies: [1, 2], buildPlatform: 7, cfSupportedPlatforms: ["iPhoneSimulator"])
     static let tvosSimulator = AppPlatform(name: "tvOS Simulator", deviceFamilies: [3], buildPlatform: 8, cfSupportedPlatforms: ["AppleTVSimulator"])
     static let watchosSimulator = AppPlatform(name: "watchOS Simulator", deviceFamilies: [4], buildPlatform: 9, cfSupportedPlatforms: ["WatchSimulator"])
+    static let visionosSimulator = AppPlatform(name: "visionOS Simulator", deviceFamilies: [7], buildPlatform: 12, cfSupportedPlatforms: ["XRSimulator"])
     static let unknown = AppPlatform(name: "Unknown", deviceFamilies: [], buildPlatform: -1, cfSupportedPlatforms: [])
 }
 
