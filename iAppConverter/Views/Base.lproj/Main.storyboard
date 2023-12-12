@@ -762,6 +762,7 @@
                                                             <menuItem title="iOS Simulator app" id="XGE-PW-0Q7"/>
                                                             <menuItem title="tvOS Simulator app" state="on" id="Pyk-7x-bih"/>
                                                             <menuItem title="watchOS Simulator app" id="bxG-5g-Wbe"/>
+                                                            <menuItem title="visionOS Simulator app" id="0CB-O1-FKO"/>
                                                         </items>
                                                     </menu>
                                                 </popUpButtonCell>
